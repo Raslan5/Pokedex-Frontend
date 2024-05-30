@@ -1,6 +1,7 @@
 import Pokemon from "@/model/pokemon";
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Badge from 'react-bootstrap/Badge';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 type Props ={
    pokemon: Pokemon;
@@ -29,10 +30,22 @@ function CustomToggle({ children, eventKey }) {
   }
   
 
+
 export default function PokemonComponent(props : Props) {
    const {pokemon} = props;
 
-
+   const renderFamily = () => {
+    return pokemon.evolutionFamily.map((familyMember, index) => {
+      let badgeText = "";
+      badgeText = (familyMember === pokemon.devolution) ? "Devolution" : 
+                   (familyMember === pokemon.evolution) ? "Evolution" : "Current";
+      return (
+        <ListGroup.Item key={index}>
+          {familyMember} <Badge bg={badgeText === 'Current' ? 'primary' : badgeText === 'Devolution' ? 'danger' : 'success'}>{badgeText}</Badge>
+        </ListGroup.Item>
+      );
+    });
+  };
    return (
        <Container>
            <Row className="justify-content-md-center">
@@ -81,12 +94,13 @@ export default function PokemonComponent(props : Props) {
           <Card.Body>
 
           <ListGroup>
-           {
+          {renderFamily()}
+           {/* {
             pokemon.evolutionFamily.map(function(data){
                 return (
                     <ListGroup.Item>{data}</ListGroup.Item>
                   )
-            })}
+            })} */}
  
     </ListGroup>
 
