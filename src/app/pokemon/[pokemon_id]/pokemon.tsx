@@ -40,7 +40,7 @@ export default function PokemonComponent(props : Props) {
       badgeText = (familyMember === pokemon.devolution) ? "Devolution" : 
                    (familyMember === pokemon.evolution) ? "Evolution" : "Current";
       return (
-        <ListGroup.Item key={index}>
+       <ListGroup.Item key={index}>
           {familyMember} <Badge bg={badgeText === 'Current' ? 'primary' : badgeText === 'Devolution' ? 'danger' : 'success'}>{badgeText}</Badge>
         </ListGroup.Item>
       );
@@ -75,9 +75,9 @@ export default function PokemonComponent(props : Props) {
           <Card.Body>
           <ListGroup>
            {
-            pokemon.pokemonType.map(function(data){
+            pokemon.pokemonType.map(function(data, index){
                 return (
-                    <ListGroup.Item>{data}</ListGroup.Item>
+                    <ListGroup.Item key={index}>{data}</ListGroup.Item>
                   )
             })}
  
