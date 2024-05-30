@@ -3,6 +3,7 @@ import { Row, Col, Container, Image } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { ReactNode } from 'react';
 type Props ={
    pokemon: Pokemon;
 }
@@ -12,8 +13,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 import Card from 'react-bootstrap/Card';
 
-
-function CustomToggle({ children, eventKey }) {
+type CustomToggleProps = {
+  children: ReactNode;
+  eventKey: string;
+};
+function CustomToggle({ children, eventKey }: CustomToggleProps) {
     const decoratedOnClick = useAccordionButton(eventKey, () =>
       console.log('totally custom!'),
     );
