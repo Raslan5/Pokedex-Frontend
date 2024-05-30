@@ -46,7 +46,7 @@ export default function PokemonPage({ params }: Params) {
                console.error(error);
                setPokemonLoaded(true);
            });
-   }, []);
+   }, [pokemon_id]);
 
 
    return (
@@ -56,7 +56,7 @@ export default function PokemonPage({ params }: Params) {
                isPokemonLoaded ?
                    pokemon ?
                        <PokemonComponent pokemon={pokemon}></PokemonComponent> :
-                       <Image className='img-fluid mx-auto d-block rounded'
+                       <Image className='img-fluid mx-auto d-block rounded' alt = "error"
                            src="https://cdn.dribbble.com/users/2805817/screenshots/13206178/media/6bd36939f8a01d4480cb1e08147e20f3.png" /> :
                    <Container>
                        <Row className="justify-content-md-center p-2">
