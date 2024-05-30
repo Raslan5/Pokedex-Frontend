@@ -1,95 +1,50 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import PokemonsComp from "@/components/pokemonsComp";
+import PokeNavBar from "@/components/pokeNavBarComp";
+import PokemonCard from "@/model/pokemonCard";
+import { useEffect, useState } from "react";
+import { Container, Row, Spinner } from "react-bootstrap";
+
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+ const [pokemons, setPokemons] = useState<PokemonCard[]>();
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+ useEffect(() => {
+   const fetchData = async () => {
+     const resp = await fetch('/api/pokemon');
+     if (resp.ok) {
+       const pokemons: PokemonCard[] = (await resp.json()).items;
+       console.log(pokemons);
+       setPokemons(pokemons);
+     }
+   };
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+
+   fetchData()
+     // Making sure to log errors on the console
+     .catch(error => {
+       console.error(error);
+     });
+ }, []);
+
+
+ return (
+   <>
+     <PokeNavBar></PokeNavBar>
+     {pokemons ?
+       <PokemonsComp pokemons={pokemons}></PokemonsComp> :
+       <Container>
+         <Row className="justify-content-md-center p-2">
+           <Spinner className='p-2' animation='border' role='status' />
+         </Row>
+         <Row className="justify-content-md-center p-2">
+           Loading Pokémons...
+         </Row>
+       </Container>
+     }
+   </>
+ );
 }
