@@ -19,7 +19,7 @@ export default function PokemonTypeBadgeComp(props: PokemonCardCompProps) {
                     return <Badge key={index} bg="danger">{pokemonType}</Badge>
                 } else if (pokemonType === "Grass") {
                     return <Badge key={index} bg="success">{pokemonType}</Badge>
-                } else if (pokemonType === "Electrical!") {
+                } else if (pokemonType === "Electrical!a") {
                     return <Badge key={index} bg="warning">{pokemonType}</Badge>
                 } else {
                     return <Badge key={index} bg="secondary">{pokemonType}</Badge>
